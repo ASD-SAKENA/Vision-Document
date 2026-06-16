@@ -1,0 +1,53 @@
+
+\فصل{فناوری‌ها}
+
+\قسمت{پشته‌ی فناوری}
+
+ساکنا یک سامانه‌ی تحت وب است که بر اساس معماری \lr{Client-Server} طراحی شده است.
+جدول~\ref{جدول:تکنولوژی} فناوری‌های انتخاب‌شده برای هر لایه را نشان می‌دهد.
+
+\begin{table}[ht]
+\centering
+\caption{پشته‌ی فناوری ساکنا}
+\label{جدول:تکنولوژی}
+\begin{tabular}{|>{\raggedleft\arraybackslash}p{3cm}|>{\raggedleft\arraybackslash}p{3.5cm}|>{\raggedleft\arraybackslash}p{5.5cm}|}
+\hline
+\rl{\textbf{لایه}} & \rl{\textbf{فناوری}} & \rl{\textbf{دلیل انتخاب}} \\
+\hline
+\rl{فرانت‌اند} & \lr{Next.js + TypeScript} & \rl{رندر سمت سرور، مسیریابی داخلی، پشتیبانی \lr{RTL}، اکوسیستم غنی} \\
+\hline
+\rl{بک‌اند} & \lr{Kotlin + Spring Boot} & \rl{ایمنی نوع، کارایی بالا، اکوسیستم \lr{JVM}، \lr{Coroutines} برای همزمانی} \\
+\hline
+\rl{لایه‌ی \lr{API}} & \lr{Spring Web MVC / REST} & \rl{ساختار یافته، پشتیبانی قوی از \lr{RBAC} و \lr{Spring Security}} \\
+\hline
+\rl{پایگاه داده} & \lr{PostgreSQL} & \rl{قابلیت اطمینان بالا، پشتیبانی از تراکنش \lr{ACID}، متن‌باز} \\
+\hline
+\rl{\lr{ORM}} & \lr{Spring Data JPA / Hibernate} & \rl{یکپارچگی با \lr{Spring Boot}، مدیریت تراکنش خودکار} \\
+\hline
+\rl{احراز هویت} & \lr{Spring Security + JWT} & \rl{بی‌حالت، پشتیبانی بومی در \lr{Spring}، \lr{RBAC} داخلی} \\
+\hline
+\rl{استقرار} & \lr{Docker + Nginx} & \rl{قابل حمل، ایزوله‌سازی محیط، پیکربندی آسان} \\
+\hline
+\rl{کنترل نسخه} & \lr{Git / GitHub} & \rl{استاندارد صنعت، امکان همکاری تیمی} \\
+\hline
+\end{tabular}
+\end{table}
+
+\قسمت{معماری کلی}
+
+ساکنا بر اساس معماری لایه‌ای طراحی شده است:
+
+\شروع{شمارش}
+\فقره \textbf{لایه‌ی ارائه (\lr{Presentation Layer}):} رابط کاربری وب بر پایه‌ی \lr{Next.js} که با \lr{REST API} بک‌اند ارتباط برقرار می‌کند. قابلیت \lr{SSR} و \lr{SSG} برای بهبود عملکرد و \lr{SEO}.
+\فقره \textbf{لایه‌ی \lr{API}:} \lr{RESTful API} بر پایه‌ی \lr{Spring Boot (Kotlin)} که تمام منطق تجاری سامانه را پیاده‌سازی می‌کند. احراز هویت و مجوزدهی از طریق \lr{Spring Security} و \lr{JWT}.
+\فقره \textbf{لایه‌ی داده:} \lr{PostgreSQL} برای ذخیره‌سازی پایدار. \lr{Spring Data JPA} برای تعامل با پایگاه داده و مدیریت تراکنش‌ها.
+\پایان{شمارش}
+
+\قسمت{نکات فنی مهم}
+
+\شروع{فقرات}
+\فقره \textbf{امنیت:} تمام ارتباطات از طریق \lr{HTTPS}. رمزهای عبور با \lr{bcrypt} هش می‌شوند. محافظت در برابر \lr{SQL Injection} از طریق \lr{Prepared Statements} در \lr{JPA} و در برابر \lr{XSS} از طریق اعتبارسنجی ورودی در سمت سرور.
+\فقره \textbf{کنترل دسترسی:} \lr{RBAC} با استفاده از \lr{Spring Security} و اعمال \lr{@PreAuthorize} در سطح \lr{Service Layer}.
+\فقره \textbf{یکپارچگی داده:} استفاده از تراکنش‌های \lr{ACID} در \lr{PostgreSQL} و \lr{@Transactional} در \lr{Spring} برای جلوگیری از ثبت پرداخت یا رزرو تکراری.
+\فقره \textbf{مزیت Kotlin:} \lr{Null Safety} در سطح زبان، کد خواناتر با \lr{Data Classes} و \lr{Extension Functions}، پشتیبانی از \lr{Coroutines} برای عملیات غیرهمزمان.
+\پایان{فقرات}
